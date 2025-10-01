@@ -7,6 +7,11 @@ function Movie() {
   const { id } = useParams();
   const [movie, setMovie] = useState();
 
+  function watchTrailer(name) {
+    const url = `https://www.youtube.com/results?search_query=${name}+trailer`;
+    window.open(url, "_blank");
+  }
+
   
   useEffect(() => {
     const fetchMovie = async () => {
@@ -34,14 +39,18 @@ function Movie() {
       <div className="image">
         <img
           src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-          alt={movie.original_title}
+          alt={movie.title}
         />
       </div>
       <div className="info">
-        <h3>{movie.original_title}</h3>
+        <h3>{movie.title}</h3>
         <p>{movie.overview}</p>
         <p>Released date: {movie.release_date}</p>
-        <button className="watch">Watch now</button>
+        <button 
+          className="watch"
+          onClick={() => watchTrailer(movie.title)}
+          >
+            Watch trailer</button>
         <button
           className="add-favorites"
           onClick={() => AddToFavorites({ ...movie, mediaType: "movie" })}

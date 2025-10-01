@@ -8,6 +8,11 @@ function Serie() {
   const { id } = useParams();
   const [serie, setSerie] = useState();
 
+  function watchTrailer(name) {
+    const url = `https://www.youtube.com/results?search_query=${name}+trailer`;
+    window.open(url, "_blank"); 
+  }
+
   useEffect(() => {
     const fetchSerie = async () => {
       try {
@@ -33,14 +38,18 @@ function Serie() {
       <div className="image">
         <img
           src={`https://image.tmdb.org/t/p/w500/${serie.poster_path}`}
-          alt={serie.original_name}
+          alt={serie.name}
         />
       </div>
       <div className="info">
-        <h3>{serie.original_name}</h3>
+        <h3>{serie.name}</h3>
         <p>{serie.overview}</p>
         <p>Released date: {serie.first_air_date}</p>
-        <button className="watch">Watch now</button>
+        <button 
+          className="watch"
+          onClick={()=> watchTrailer(serie.name)}
+        
+        >Watch trailer</button>
         <button
           className="add-favorites"
           onClick={() => AddToFavorites({ ...serie, mediaType: "tv" })}
